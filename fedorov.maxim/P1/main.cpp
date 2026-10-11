@@ -13,7 +13,7 @@ int main()
   int prev2 = 0;
 
   bool is_first_el = true;
-  int cur;
+  int cur = 0;
 
   while (true) {
     std::cin >> cur;
@@ -25,11 +25,9 @@ int main()
 
     if (cur == 0) {
       break;
-    }
-    else if (cur > 0) {
+    } else if (cur > 0) {
       is_cur_sign_plus = true;
-    }
-    else {
+    } else {
       is_cur_sign_plus = false;
     }
 
