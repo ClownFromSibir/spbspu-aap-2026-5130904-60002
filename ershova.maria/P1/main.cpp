@@ -1,5 +1,6 @@
 #include <iostream>
-int main() {
+int main()
+{
   int count = 0;
   int count_pyth_triples = 0;
   int a1 = 0, a2 = 0, a3 = 0;
