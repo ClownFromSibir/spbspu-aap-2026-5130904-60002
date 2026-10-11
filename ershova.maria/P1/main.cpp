@@ -22,7 +22,7 @@ int main()
         return 1;
     }
     if (a2 == 0)
-    }
+    {
         std::cerr << "ERROR: Sequence is too short\n";
         return 2;
     }
