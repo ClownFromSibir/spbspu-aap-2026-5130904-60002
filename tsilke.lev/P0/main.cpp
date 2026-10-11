@@ -1,6 +1,7 @@
 #include <iostream>
 
-int main(){
+int main()
+{
   std::cout << "tsilke.lev \n";
   return 0;
 }
