@@ -26,11 +26,13 @@ int main()
 		if (cur == 0) {
 			break;
 		}
-		else if (cur > 0) {
-			is_cur_sign_plus = true;
-		}
 		else {
-			is_cur_sign_plus = false;
+			if (cur > 0) {
+				is_cur_sign_plus = true;
+			}
+			else {
+				is_cur_sign_plus = false;
+			}
 		}
 
 		if (not is_first_el && is_cur_sign_plus != is_last_sign_plus) {
