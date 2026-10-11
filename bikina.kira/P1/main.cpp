@@ -1,16 +1,16 @@
 #include <iostream>
 
-int main() 
+int main()
 {
   long long n = 0;
 
-  if (!(std::cin >> n)) 
+  if (!(std::cin >> n))
   {
     std::cerr << "Error: invalid input\n";
     return 1;
   }
 
-  if (n == 0) 
+  if (n == 0)
   {
     std::cerr << "Error: sequence is too short\n";
     return 2;
