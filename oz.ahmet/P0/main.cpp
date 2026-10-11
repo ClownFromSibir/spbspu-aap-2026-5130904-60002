@@ -2,6 +2,6 @@
 
 int main()
 {
-    std::cout << "oz.ahmet\n";
-    return 0;
+  std::cout << "oz.ahmet\n";
+  return 0;
 }
