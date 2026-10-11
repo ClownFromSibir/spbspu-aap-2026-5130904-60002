@@ -1,7 +1,7 @@
 #include <iostream>
 
 int main() {
-  long long n;
+  long long n = 0;
 
   if (!(std::cin >> n)) {
     std::cerr << "Error: invalid input\n";
@@ -23,8 +23,7 @@ int main() {
     if (n > max_val) {
       max_val = n;
       count_max = 1;
-    }
-    else if (n == max_val) {
+    } else if (n == max_val) {
       count_max++;
     }
 
@@ -33,8 +32,7 @@ int main() {
       if (current_len > max_len) {
         max_len = current_len;
       }
-    }
-    else {
+    } else {
       current_len = 1;
     }
 
