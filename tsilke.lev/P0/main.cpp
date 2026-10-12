@@ -2,6 +2,6 @@
 
 int main()
 {
-  std::cout << "tsilke.lev \n";
+  std::cout << "tsilke.lev\n";
   return 0;
 }
