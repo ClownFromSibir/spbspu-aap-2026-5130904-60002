@@ -2,7 +2,7 @@
 
 int main()
 {
-  int n1, n2, n3;
+  int n1{}, n2{}, n3{};
   std::cin >> n3;
   if (std::cin.fail())
   {
