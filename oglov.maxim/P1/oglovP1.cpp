@@ -1,39 +1,45 @@
+
 #include <iostream>
+
 int main() {
-  int lenMonDecreas = 0;
-  int mxLenMonDec = lenMonDecreas;
-  int lenChangeSign = 0;
-  int mxLenChangeSign = lenChangeSign;
+  int len_mon_decreas = 0;
+  int mx_len_mon_dec = len_mon_decreas;
+  int len_change_sign = 0;
+  int mx_len_change_sign = len_change_sign;
   int curr = 0;
 
   while (true) {
-    int secToLast = curr;
+    const int sec_to_last = curr;
+
     if (!(std::cin >> curr)) {
       std::cerr << "Invalid argument!\n";
       return 1;
     } else if (curr == 0) {
       break;
     } else {
-      if (curr <= secToLast) {
-        lenMonDecreas++;
-        if (lenMonDecreas > mxLenMonDec) {
-          mxLenMonDec = lenMonDecreas;
+      if (curr <= sec_to_last) {
+        len_mon_decreas++;
+        if (len_mon_decreas > mx_len_mon_dec) {
+          mx_len_mon_dec = len_mon_decreas;
         }
       } else {
-        lenMonDecreas = 1;
+        len_mon_decreas = 1;
       }
 
-      if ((curr > 0 && secToLast < 0) || (curr < 0 && secToLast > 0)) {
-        lenChangeSign++;
-        if (lenChangeSign > mxLenChangeSign) {
-          mxLenChangeSign = lenChangeSign;
+      if ((curr > 0 && sec_to_last < 0) || (curr < 0 && sec_to_last > 0)) {
+        len_change_sign++;
+        if (len_change_sign > mx_len_change_sign) {
+          mx_len_change_sign = len_change_sign;
         }
       } else {
-        lenChangeSign = 0;
+        len_change_sign = 0;
       }
     }
   }
-  std::cout << "#5 Max lenght mon. - decreas. series = " << mxLenMonDec << "\n";
-  std::cout << "#9 Max count change sign = " << mxLenChangeSign;
+
+  std::cout << "#5 Max lenght mon. - decreas. series = " << mx_len_mon_dec
+            << "\n";
+  std::cout << "#9 Max count change sign = " << mx_len_change_sign;
+
   return 0;
 }
