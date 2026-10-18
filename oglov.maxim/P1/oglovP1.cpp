@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 int main() {
   int lenMonDecreas = 0;
   int mxLenMonDec = lenMonDecreas;
