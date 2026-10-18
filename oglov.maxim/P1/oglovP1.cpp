@@ -1,7 +1,8 @@
 
 #include <iostream>
 
-int main() {
+int main() 
+{
   int len_mon_decreas = 0;
   int mx_len_mon_dec = len_mon_decreas;
   int len_change_sign = 0;
@@ -37,8 +38,7 @@ int main() {
     }
   }
 
-  std::cout << "#5 Max lenght mon. - decreas. series = " << mx_len_mon_dec
-            << "\n";
+  std::cout << "#5 Max lenght mon. - decreas. series = " << mx_len_mon_dec << "\n";
   std::cout << "#9 Max count change sign = " << mx_len_change_sign;
 
   return 0;
