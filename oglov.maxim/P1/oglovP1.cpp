@@ -1,7 +1,7 @@
 
 #include <iostream>
 
-int main() 
+int main()
 {
   int len_mon_decreas = 0;
   int mx_len_mon_dec = len_mon_decreas;
