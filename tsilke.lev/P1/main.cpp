@@ -2,43 +2,44 @@
 
 int main()
 {
-  int number(0);
-  int currentValue;
-  int value1;
-  int value2;
-  int value3;
-  int count11(0);
-  int count15(0);
+  int number = 0;
+  int current_value = 0;
+  int value1 = 0;
+  int value2 = 0;
+  int value3 = 0;
+  int count11 = 0;
+  int count15 = 0;
   std::cout << "Enter values of sequence:\n";
   while (true)
   {
-    std::cin >> currentValue;
+    std::cin >> current_value;
     if (std::cin.fail())
     {
       std::cerr << "Invalid input\n";
       return 1;
     }
-    if (currentValue == 0)
+    if (current_value == 0)
     {
       break;
     }
     number++;
-    switch (number)
+    if (number == 1)
     {
-      case 1:
-        value1 = currentValue;
-        break;
-      case 2:
-        value2 = currentValue;
-        break;
-      case 3:
-        value3 = currentValue;
-        break;
-      default:
-        value1 = value2;
-        value2 = value3;
-        value3 = currentValue;
-        break;
+      value1 = current_value;
+    }
+    if (number == 2)
+    {
+      value2 = current_value;
+    }
+    if (number == 3)
+    {
+      value3 = current_value;
+    }
+    if (number > 3)
+    {
+      value1 = value2;
+      value2 = value3;
+      value3 = current_value;
     }
     if (number >= 2)
     {
