@@ -2,44 +2,64 @@
 
 int main()
 {
-  const int MAX_ARR = 10000;
-  int number(0), value(1), count11(0), count15(0);
-  int arr[MAX_ARR];
-  std::cout << "Enter values of array:\n";
-  while (number < MAX_ARR)
+  int number(0);
+  int currentValue;
+  int value1;
+  int value2;
+  int value3;
+  int count11(0);
+  int count15(0);
+  std::cout << "Enter values of sequence:\n";
+  while (true)
   {
-    std::cin >> value;
+    std::cin >> currentValue;
     if (std::cin.fail())
     {
       std::cerr << "Invalid input\n";
       return 1;
     }
-    if (value == 0)
+    if (currentValue == 0)
     {
       break;
     }
-    arr[number] = value;
     number++;
+    switch (number)
+    {
+      case 1:
+        value1 = currentValue;
+        break;
+      case 2:
+        value2 = currentValue;
+        break;
+      case 3:
+        value3 = currentValue;
+        break;
+      default:
+        value1 = value2;
+        value2 = value3;
+        value3 = currentValue;
+        break;
+    }
+    if (number >= 2)
+    {
+      if (value2 % value1 == 0)
+      {
+        count11++;
+      }
+    }
+    if (number >= 3)
+    {
+      if (value3 == value1 + value2)
+      {
+        count15++;
+      }
+    }
   }
   if (number < 2)
   {
     std::cerr << "11: There must be at least two elements\n";
     std::cerr << "15: There must be at least three elements\n";
     return 2;
-  }
-  for (int i = 0; i < number - 1; i++)
-  {
-    if (arr[i + 1] % arr[i] == 0)
-    {
-      count11++;
-    }
-    if ((number > 2) && (i < number - 2))
-    {
-      if (arr[i + 2] == arr[i] + arr[i + 1])
-      {
-        count15++;
-      }
-    }
   }
   std::cout << "11: " << count11 << "\n";
   if (number < 3)
