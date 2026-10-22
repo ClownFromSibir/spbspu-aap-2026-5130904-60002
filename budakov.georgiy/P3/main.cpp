@@ -1,15 +1,32 @@
-#include<iostream>
-#include<string>
-#include<fstream>
+#include <iostream>
+#include <string>
+#include <fstream>
+
 const int stack_mode = 1;
 const int heap_mode = 2;
 const int MAX_SIZE = 100;
-bool isNumber(char* arg)
+
+bool checkFirstArg(char* arg)
 {
-  int dummy_num;
-  char dummy_char;
-  return std::sscanf(arg, "%d", &dummy_num, &dummy_char) == 1;
+  try
+  {
+    if (1 > std::stoi(arg) || std::stoi(arg) > 2)
+    {
+      std::cerr << "First argument is out of range\n";
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
+  catch(const std::invalid_argument& e)
+  {
+    std::cerr << "First argument is not a number/n";
+    return false;
+  }
 }
+
 void readFile(int& x, std::ifstream& file)
 {
   file >> x;
@@ -22,6 +39,7 @@ void readFile(int& x, std::ifstream& file)
     throw std::invalid_argument("Invalid argument\n");
   }
 }
+
 void initMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ifstream& inpf)
 {
   if (rows <= 0 || cols <= 0)
@@ -32,6 +50,7 @@ void initMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ifstream& inpf)
   {
     throw std::invalid_argument("Rows or cols > max size\n");
   }
+
   for (int i = 0; i < rows; i++)
   {
     for (int j = 0; j < cols; j++)
@@ -40,6 +59,7 @@ void initMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ifstream& inpf)
     }
   }
 }
+
 void initMatrix(int** matrix, int rows, int cols, std::ifstream& inpf)
 {
   if (rows <= 0 || cols <= 0)
@@ -54,17 +74,21 @@ void initMatrix(int** matrix, int rows, int cols, std::ifstream& inpf)
     }
   }
 }
+
 void spiralAdd(int matrix[][MAX_SIZE], int rows, int cols)
 {
   if (rows <= 0 || cols <= 0)
   {
     return;
   }
+
   int addend = 1;
+
   int left = 0;
   int right = cols - 1;
   int top = 0;
   int bottom = rows - 1;
+
   while (left <= right && top <= bottom)
   {
     for (int i = top; i <= bottom; i++)
@@ -73,18 +97,21 @@ void spiralAdd(int matrix[][MAX_SIZE], int rows, int cols)
       addend++;
     }
     left++;
+
     for (int i = left; i <= right; i++)
     {
       matrix[bottom][i] += addend;
       addend++;
     }
     bottom--;
+
     for (int i = bottom; i >= top; i--)
     {
       matrix[i][right] += addend;
       addend++;
     }
     right--;
+
     for (int i = right; i >= left; i--)
     {
       matrix[top][i] += addend;
@@ -93,17 +120,21 @@ void spiralAdd(int matrix[][MAX_SIZE], int rows, int cols)
     top++;
   }
 }
+
 void spiralAdd(int** matrix, int rows, int cols)
 {
   if (matrix == nullptr)
   {
     return;
   }
+
   int addend = 1;
+
   int left = 0;
   int right = cols - 1;
   int top = 0;
   int bottom = rows - 1;
+
   while (left <= right && top <= bottom)
   {
     for (int i = top; i <= bottom; i++)
@@ -112,18 +143,21 @@ void spiralAdd(int** matrix, int rows, int cols)
       addend++;
     }
     left++;
+
     for (int i = left; i <= right; i++)
     {
       matrix[bottom][i] += addend;
       addend++;
     }
     bottom--;
+
     for (int i = bottom; i >= top; i--)
     {
       matrix[i][right] += addend;
       addend++;
     }
     right--;
+
     for (int i = right; i >= left; i--)
     {
       matrix[top][i] += addend;
@@ -132,12 +166,14 @@ void spiralAdd(int** matrix, int rows, int cols)
     top++;
   }
 }
+
 void printMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ofstream& outf)
 {
   if (rows <= 0 || cols <= 0)
   {
     return;
   }
+
   outf << rows << " " << cols;
   for (int i = 0; i < rows; i++)
   {
@@ -148,12 +184,14 @@ void printMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ofstream& outf
   }
   outf << "\n";
 }
+
 void printMatrix(int** matrix, int rows, int cols, std::ofstream& outf)
 {
   if (matrix == nullptr)
   {
     return;
   }
+
   outf << rows << " " << cols;
   for (int i = 0; i < rows; i++)
   {
@@ -164,6 +202,7 @@ void printMatrix(int** matrix, int rows, int cols, std::ofstream& outf)
   }
   outf << "\n";
 }
+
 int** allocateMatrix(int rows, int cols)
 {
   int** matrix = nullptr;
@@ -171,6 +210,7 @@ int** allocateMatrix(int rows, int cols)
   {
     return matrix;
   }
+
   try{
     matrix = new int* [rows] ();
     for (int i = 0; i < rows; i++)
@@ -189,8 +229,10 @@ int** allocateMatrix(int rows, int cols)
     matrix = nullptr;
     throw;
   }
+
   return matrix;
 }
+
 void freeMatrix(int** matrix, int rows)
 {
   if (matrix == nullptr)
@@ -205,6 +247,7 @@ void freeMatrix(int** matrix, int rows)
   delete[] matrix;
   matrix = nullptr;
 }
+
 int main(int argc, char* argv[])
 {
   if (argc < 4)
@@ -217,25 +260,23 @@ int main(int argc, char* argv[])
     std::cerr << "Too many arguments\n";
     return 1;
   }
-  else if (!isNumber(argv[1]))
+  else if (!checkFirstArg(argv[1]))
   {
-    std::cerr << "First parameter is not a number\n";
     return 1;
   }
-  else if (1 > std::stoi(argv[1]) || std::stoi(argv[1]) > 2)
-  {
-    std::cerr << "First parameter is out of range\n";
-    return 1;
-  }
+
   std::ifstream input(argv[2]);
   std::ofstream output(argv[3]);
+
   if(!input.is_open())
   {
     std::cerr << "Couldn't open the file\n";
     return 2;
   }
+
   int rows;
   int cols;
+
   try
   {
     readFile(rows, input);
@@ -246,6 +287,7 @@ int main(int argc, char* argv[])
     std::cerr << "ERROR: " << e.what() << "\n";
     return 2;
   }
+
   if (std::stoi(argv[1]) == stack_mode)
   {
     int array[MAX_SIZE][MAX_SIZE]{};
@@ -260,10 +302,7 @@ int main(int argc, char* argv[])
       std::cerr << "ERROR: " << e.what() << "\n";
       return 2;
     }
-    catch (...)
-    {
-      std::cerr << "ERROR: Unknown error\n";
-    }
+
     if (!input.eof())
     {
       std::cerr << "Didn't reach the end of file\n";
@@ -279,22 +318,20 @@ int main(int argc, char* argv[])
       initMatrix(array, rows, cols, input);
       spiralAdd(array, rows, cols);
       printMatrix(array, rows, cols, output);
-      freeMatrix(array, rows, cols);
+      freeMatrix(array, rows);
     }
     catch (std::invalid_argument& e)
     {
       std::cerr << "ERROR: " << e.what() << "\n";
       return 2;
     }
-    catch (...)
-    {
-      std::cerr << "ERROR: Unknown error\n";
-    }
+
     if (!input.eof())
     {
       std::cerr << "Didn't reach the end of file\n";
       return 2;
     }
   }
+
   return 0;
 }
