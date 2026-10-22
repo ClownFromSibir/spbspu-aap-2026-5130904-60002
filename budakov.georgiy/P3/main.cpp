@@ -6,7 +6,7 @@ const int stack_mode = 1;
 const int heap_mode = 2;
 const int MAX_SIZE = 100;
 
-bool checkFirstArg(char* arg)
+bool checkFirstArg(const char* arg)
 {
   try
   {
@@ -20,15 +20,16 @@ bool checkFirstArg(char* arg)
       return true;
     }
   }
-  catch(const std::invalid_argument& e)
+  catch (const std::invalid_argument& e)
   {
     std::cerr << "First argument is not a number/n";
     return false;
   }
 }
 
-void readFile(int& x, std::ifstream& file)
+int readFile(std::ifstream& file)
 {
+  int x;
   file >> x;
   if (file.fail())
   {
@@ -38,6 +39,8 @@ void readFile(int& x, std::ifstream& file)
     }
     throw std::invalid_argument("Invalid argument\n");
   }
+
+  return x;
 }
 
 void initMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ifstream& inpf)
@@ -55,7 +58,7 @@ void initMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ifstream& inpf)
   {
     for (int j = 0; j < cols; j++)
     {
-      readFile(matrix[i][j], inpf);
+      matrix[i][j] = readFile(inpf);
     }
   }
 }
@@ -70,7 +73,7 @@ void initMatrix(int** matrix, int rows, int cols, std::ifstream& inpf)
   {
     for (int j = 0; j < cols; j++)
     {
-      readFile(matrix[i][j], inpf);
+      matrix[i][j] = readFile(inpf);
     }
   }
 }
@@ -211,11 +214,11 @@ int** allocateMatrix(int rows, int cols)
     return matrix;
   }
 
-  try{
-    matrix = new int* [rows] ();
+  try {
+    matrix = new int*[rows]();
     for (int i = 0; i < rows; i++)
     {
-      matrix[i] = new int[cols] ();
+      matrix[i] = new int[cols]();
     }
   }
   catch (...)
@@ -268,19 +271,19 @@ int main(int argc, char* argv[])
   std::ifstream input(argv[2]);
   std::ofstream output(argv[3]);
 
-  if(!input.is_open())
+  if (!input.is_open())
   {
     std::cerr << "Couldn't open the file\n";
     return 2;
   }
 
-  int rows;
-  int cols;
+  int rows = 0;
+  int cols = 0;
 
   try
   {
-    readFile(rows, input);
-    readFile(cols, input);
+    rows = readFile(input);
+    cols = readFile(input);
   }
   catch (std::invalid_argument& e)
   {
