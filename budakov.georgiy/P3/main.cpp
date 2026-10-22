@@ -191,7 +191,7 @@ int** allocateMatrix(int rows, int cols)
   }
   return matrix;
 }
-void freeMatrix(int** matrix, int rows, int cols)
+void freeMatrix(int** matrix, int rows)
 {
   if (matrix == nullptr)
   {
