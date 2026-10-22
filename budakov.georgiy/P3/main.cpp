@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <stdexcept>
 
 const int stack_mode = 1;
 const int heap_mode = 2;
@@ -29,7 +30,7 @@ bool checkFirstArg(const char* arg)
 
 int readFile(std::ifstream& file)
 {
-  int x;
+  int x = 0;
   file >> x;
   if (file.fail())
   {
@@ -47,7 +48,7 @@ void initMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ifstream& inpf)
 {
   if (rows <= 0 || cols <= 0)
   {
-    throw std::invalid_argument("Rows or cols <= 0 \n");
+    return;
   }
   if (rows > MAX_SIZE || cols > MAX_SIZE)
   {
@@ -172,12 +173,13 @@ void spiralAdd(int** matrix, int rows, int cols)
 
 void printMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ofstream& outf)
 {
+  outf << rows << " " << cols;
+  
   if (rows <= 0 || cols <= 0)
   {
     return;
   }
 
-  outf << rows << " " << cols;
   for (int i = 0; i < rows; i++)
   {
     for (int j = 0; j < cols; j++)
@@ -190,12 +192,13 @@ void printMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ofstream& outf
 
 void printMatrix(int** matrix, int rows, int cols, std::ofstream& outf)
 {
+  outf << rows << " " << cols;
+  
   if (matrix == nullptr)
   {
     return;
   }
 
-  outf << rows << " " << cols;
   for (int i = 0; i < rows; i++)
   {
     for (int j = 0; j < cols; j++)
@@ -225,7 +228,7 @@ int** allocateMatrix(int rows, int cols)
   {
     for (int i = 0; i < rows; i++)
     {
-      delete matrix[i];
+      delete[] matrix[i];
       matrix[i] = nullptr;
     }
     delete[] matrix;
@@ -244,7 +247,7 @@ void freeMatrix(int** matrix, int rows)
   }
   for (int i = 0; i < rows; i++)
   {
-    delete matrix[i];
+    delete[] matrix[i];
     matrix[i] = nullptr;
   }
   delete[] matrix;
@@ -326,9 +329,12 @@ int main(int argc, char* argv[])
     catch (std::invalid_argument& e)
     {
       std::cerr << "ERROR: " << e.what() << "\n";
+      freeMatrix(array, rows);
       return 2;
     }
 
+    char dummy = ' ';
+    input >> dummy;
     if (!input.eof())
     {
       std::cerr << "Didn't reach the end of file\n";
