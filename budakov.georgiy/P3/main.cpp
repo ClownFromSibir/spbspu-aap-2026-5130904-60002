@@ -174,7 +174,7 @@ void spiralAdd(int** matrix, int rows, int cols)
 void printMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ofstream& outf)
 {
   outf << rows << " " << cols;
-  
+
   if (rows <= 0 || cols <= 0)
   {
     return;
@@ -193,7 +193,7 @@ void printMatrix(int matrix[][MAX_SIZE], int rows, int cols, std::ofstream& outf
 void printMatrix(int** matrix, int rows, int cols, std::ofstream& outf)
 {
   outf << rows << " " << cols;
-  
+
   if (matrix == nullptr)
   {
     return;
