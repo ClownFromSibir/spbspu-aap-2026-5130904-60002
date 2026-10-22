@@ -217,7 +217,8 @@ int** allocateMatrix(int rows, int cols)
     return matrix;
   }
 
-  try {
+  try
+  {
     matrix = new int*[rows]();
     for (int i = 0; i < rows; i++)
     {
@@ -309,6 +310,8 @@ int main(int argc, char* argv[])
       return 2;
     }
 
+    char dummy = ' ';
+    input >> dummy;
     if (!input.eof())
     {
       std::cerr << "Didn't reach the end of file\n";
