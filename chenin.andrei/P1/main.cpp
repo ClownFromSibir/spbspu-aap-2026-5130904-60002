@@ -18,33 +18,33 @@ int main()
     return EMPTY_SEQUENCE;
   }
 
-  int maxValue = current;
-  int afterMax = 0;
-  int minValue = current;
-  int minCount = 1;
+  int max_value = current;
+  int after_max = 0;
+  int min_value = current;
+  int min_count = 1;
   while (std::cin >> current)
   {
     if (current == 0)
     {
       break;
     }
-    if (current > maxValue)
+    if (current > max_value)
     {
-      maxValue = current;
-      afterMax = 0;
+      max_value = current;
+      after_max = 0;
     }
     else
     {
-      afterMax++;
+      after_max++;
     }
-    if (current < minValue)
+    if (current < min_value)
     {
-      minValue = current;
-      minCount = 1;
+      min_value = current;
+      min_count = 1;
     }
-    else if (current == minValue)
+    else if (current == min_value)
     {
-      minCount++;
+      min_count++;
     }
   }
   if (!std::cin)
@@ -52,7 +52,7 @@ int main()
     std::cerr << "Error: invalid sequence" << "\n";
     return WRONG_INPUT;
   }
-  std::cout << afterMax << "\n";
-  std::cout << minCount << "\n";
+  std::cout << after_max << "\n";
+  std::cout << min_count << "\n";
   return 0;
 }
