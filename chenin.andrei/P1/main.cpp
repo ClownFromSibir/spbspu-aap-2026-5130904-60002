@@ -2,63 +2,57 @@
 
 int main()
 {
+  const int WRONG_INPUT = 1;
+  const int EMPTY_SEQUENCE = 2;
   int current = 0;
-
-  if (!(std::cin >> current))
+  std::cin >> current;
+  if (!std::cin)
   {
-    std::cerr << "Error: invalid input\n";
-    return 1;
+    std::cerr << "Error: invalid input" << "\n";
+    return WRONG_INPUT;
   }
-
   if (current == 0)
   {
+    std::cerr << "Error: sequence is empty" << "\n";
     std::cout << 0 << "\n";
-    std::cerr << "Error: sequence is too short\n";
-    return 2;
+    return EMPTY_SEQUENCE;
   }
 
-  int max_val = current;
-  int aft_max_count = 0;
-
-  int min_val = current;
-  int cnt_min = 1;
-
+  int maxValue = current;
+  int afterMax = 0;
+  int minValue = current;
+  int minCount = 1;
   while (std::cin >> current)
   {
     if (current == 0)
     {
       break;
     }
-
-    if (current > max_val)
+    if (current > maxValue)
     {
-      max_val = current;
-      aft_max_count = 0;
+      maxValue = current;
+      afterMax = 0;
     }
     else
     {
-      ++aft_max_count;
+      afterMax++;
     }
-
-    if (current < min_val)
+    if (current < minValue)
     {
-      min_val = current;
-      cnt_min = 1;
+      minValue = current;
+      minCount = 1;
     }
-    else if (current == min_val)
+    else if (current == minValue)
     {
-      ++cnt_min;
+      minCount++;
     }
   }
-
-  if (current != 0)
+  if (!std::cin)
   {
-    std::cerr << "Error: sequence must end with 0\n";
-    return 1;
+    std::cerr << "Error: invalid sequence" << "\n";
+    return WRONG_INPUT;
   }
-
-  std::cout << aft_max_count << "\n";
-  std::cout << cnt_min << "\n";
-
+  std::cout << afterMax << "\n";
+  std::cout << minCount << "\n";
   return 0;
 }
