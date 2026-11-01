@@ -8,9 +8,10 @@ namespace gorkova
 {
   const int input_error = 1;
   const int duplicates_found = 1;
+  const std::size_t initial_capacity = 16;
   char* readLine(std::size_t& size)
   {
-    std::size_t capacity = 16;
+    std::size_t capacity = initial_capacity;
     char* buffer = nullptr;
     try
     {
