@@ -4,7 +4,7 @@
 
 const std::size_t ONE = 1;
 const std::size_t ARRAY_GROWTH_SIZE = 5;
-const std::size_t RES_ARRAY_SIZE = 256;
+const std::size_t RES_ARRAY_SIZE = 257;
 
 int main()
 {
@@ -26,12 +26,11 @@ int main()
     first[idx++] = temp;
   }
   if (first == nullptr) {
-    delete[] first;
-    first = nullptr;
     std::cerr << "Empty input";
     return 1;
   }
-  first[idx - 1] = '\0';
+  first[idx] = '\0';
+
   char* res = new char[RES_ARRAY_SIZE];
   res[0] = '\0';
   std::cout << fedorov::getMissingChars(first, res) << "\n";
@@ -42,7 +41,7 @@ int main()
 
   while ((temp = std::cin.get()) != EOF && temp != '\n') {
     if (idx % ARRAY_GROWTH_SIZE == 0) {
-      temp_second = new char[idx + ARRAY_GROWTH_SIZE];
+      temp_second = new char[idx + ARRAY_GROWTH_SIZE + ONE];
       for (std::size_t i = 0; i < idx; i++) {
         temp_second[i] = second[i];
       }
@@ -57,8 +56,6 @@ int main()
     res = nullptr;
     delete[] first;
     first = nullptr;
-    delete[] second;
-    second = nullptr;
     return 0;
   }
   second[idx] = '\0';

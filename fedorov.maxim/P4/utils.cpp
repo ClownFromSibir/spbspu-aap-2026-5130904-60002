@@ -17,6 +17,7 @@ namespace fedorov {
 
   char* getUniqueChars(const char* const str1, const char* const str2, char* const res)
   {
+    res[0] = '\0';
     std::size_t i = 0;
     std::size_t k = 0;
 
