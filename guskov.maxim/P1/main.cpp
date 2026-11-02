@@ -8,6 +8,8 @@ int main()
   int previous = 0;
   int current = 0;
   int count = 0;
+  int minValue = 0;
+  bool firstElement = true;
 
   while (true)
   {
@@ -21,11 +23,21 @@ int main()
       return INPUT_ERROR_CODE;
     }
     
-    if (current == 0)
+    if (current == 0 )
     {
-      return 0;
+      break;
+    }
+
+    if (firstElement){
+      minValue = current;
+      firstElement = false;
+    }
+
+    if (current > minValue){
+      minValue = current;
     }
 
     count++;
   }
+  
 }
