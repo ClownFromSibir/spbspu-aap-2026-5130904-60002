@@ -11,17 +11,17 @@ namespace udovichenko
       return 0;
     }
 
-    size_t resultLen = 0;
+    size_t result_len = 0;
     for (size_t i = 0; str1[i] != '\0'; i++)
     {
       if (std::strchr(str2, str1[i]))
       {
-        buf[resultLen++] = str1[i];
+        buf[result_len++] = str1[i];
       }
     }
 
-    buf[resultLen] = '\0';
-    return resultLen;
+    buf[result_len] = '\0';
+    return result_len;
   }
 
   int hasSameChars(const char *str1, const char *str2)
@@ -52,12 +52,12 @@ namespace udovichenko
 
 int main()
 {
-  const char *const stringForCommonSymbols = "abc ef";
-  const char *const stringForHasSame = "abs";
-  std::string inputString;
+  const char *const STRING_FOR_COMMON_SYMBOLS = "abc ef";
+  const char *const STRING_FOR_HAS_SAME = "abs";
+  std::string input_string;
   try
   {
-    if (!std::getline(std::cin, inputString))
+    if (!std::getline(std::cin, input_string))
     {
       std::cerr << "Failed to read string" << '\n';
       return 1;
@@ -69,7 +69,7 @@ int main()
     return 1;
   }
 
-  const size_t length = inputString.length();
+  const size_t length = input_string.length();
   char *result = nullptr;
   try
   {
@@ -80,12 +80,12 @@ int main()
     std::cerr << "Failed to allocate memory: " << e.what() << '\n';
     return 1;
   }
-  udovichenko::getCommonSymbolsString(inputString.c_str(), stringForCommonSymbols, result);
+  udovichenko::getCommonSymbolsString(input_string.c_str(), STRING_FOR_COMMON_SYMBOLS, result);
   std::cout << result << '\n';
   delete[] result;
   result = nullptr;
 
-  std::cout << udovichenko::hasSameChars(inputString.c_str(), stringForHasSame) << '\n';
+  std::cout << udovichenko::hasSameChars(input_string.c_str(), STRING_FOR_HAS_SAME) << '\n';
 
   return 0;
 }
