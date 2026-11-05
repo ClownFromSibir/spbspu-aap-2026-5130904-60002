@@ -1,6 +1,16 @@
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <cstring>
+
+void deleteMatr(int **&matr, int m, int n)
+{
+  for (int i = 0; i < m; i++)
+  {
+    delete[] matr[i];
+  }
+  delete[] matr;
+  matr = nullptr;
+}
 
 const int MAX_SIZE = 100;
 
@@ -13,8 +23,17 @@ int main(int argc, char *argv[])
   }
 
   std::ifstream file_i(argv[2]);
+  if (!file_i)
+  {
+    std::cerr << "INVALID_INPUT_FILE\n";
+    return 1;
+  }
   int m{}, n{};
-  file_i >> m >> n;
+  if (!(file_i >> m >> n))
+  {
+    std::cerr << "INVALID_DATA\n";
+    return 1;
+  }
 
   if ((m == 0) && (n == 0))
   {
@@ -32,7 +51,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  if (std::stoi(argv[1]) == 1)
+  if (std::strcmp(argv[1], "1") == 0)
   {
     if ((n > MAX_SIZE) || (m > MAX_SIZE))
     {
@@ -44,7 +63,11 @@ int main(int argc, char *argv[])
     {
       for (int j = 0; j < n; j++)
       {
-        file_i >> matr[i][j];
+        if (!(file_i >> matr[i][j]))
+        {
+          std::cerr << "INVALID_DATA\n";
+          return 1;
+        }
       }
     }
 
@@ -72,7 +95,7 @@ int main(int argc, char *argv[])
     file_o << ans;
     file_o.close();
   }
-  else if (std::stoi(argv[1]) == 2)
+  else if (std::strcmp(argv[1], "2") == 0)
   {
     int **matr = new int *[m];
     for (int i = 0; i < m; i++)
@@ -84,7 +107,12 @@ int main(int argc, char *argv[])
     {
       for (int j = 0; j < n; j++)
       {
-        file_i >> matr[i][j];
+        if (!(file_i >> matr[i][j]))
+        {
+          std::cerr << "INVALID_DATA\n";
+          deleteMatr(matr, m, n);
+          return 1;
+        }
       }
     }
 
@@ -108,12 +136,7 @@ int main(int argc, char *argv[])
       }
     }
 
-    for (int i = 0; i < m; i++)
-    {
-      delete[] matr[i];
-    }
-    delete[] matr;
-    matr = nullptr;
+    deleteMatr(matr, m, n);
 
     std::ofstream file_o(argv[3]);
     file_o << ans;
