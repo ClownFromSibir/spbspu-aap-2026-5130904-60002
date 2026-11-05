@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cstring>
 
-void deleteMatr(int **&matr, int m, int n)
+void deleteMatr(int **&matr, int m)
 {
   for (int i = 0; i < m; i++)
   {
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
         if (!(file_i >> matr[i][j]))
         {
           std::cerr << "INVALID_DATA\n";
-          deleteMatr(matr, m, n);
+          deleteMatr(matr, m);
           return 1;
         }
       }
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
       }
     }
 
-    deleteMatr(matr, m, n);
+    deleteMatr(matr, m);
 
     std::ofstream file_o(argv[3]);
     file_o << ans;
