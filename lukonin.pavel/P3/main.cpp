@@ -2,7 +2,9 @@
 #include <fstream>
 #include <string>
 
-int main(int argc, char* argv[])
+const int MAX_SIZE = 100;
+
+int main(int argc, char *argv[])
 {
   if (argc != 4)
   {
@@ -30,15 +32,14 @@ int main(int argc, char* argv[])
     return 1;
   }
 
-
   if (std::stoi(argv[1]) == 1)
   {
-    if ((n > 100) || (m > 100))
+    if ((n > MAX_SIZE) || (m > MAX_SIZE))
     {
       std::cerr << "INVALID_DATA\n";
       return 1;
     }
-    int matr[100][100]{};
+    int matr[MAX_SIZE][MAX_SIZE]{};
     for (int i = 0; i < m; i++)
     {
       for (int j = 0; j < n; j++)
@@ -56,7 +57,7 @@ int main(int argc, char* argv[])
       bool flag = true;
       for (int j = 0; j < n - 1; j++)
       {
-        if (matr[i][j] == matr[i][j+1])
+        if (matr[i][j] == matr[i][j + 1])
         {
           flag = false;
         }
@@ -73,7 +74,7 @@ int main(int argc, char* argv[])
   }
   else if (std::stoi(argv[1]) == 2)
   {
-    int** matr = new int*[m]{};
+    int **matr = new int *[m];
     for (int i = 0; i < m; i++)
     {
       matr[i] = new int[n]{};
@@ -96,7 +97,7 @@ int main(int argc, char* argv[])
       bool flag = true;
       for (int j = 0; j < n - 1; j++)
       {
-        if (matr[i][j] == matr[i][j+1])
+        if (matr[i][j] == matr[i][j + 1])
         {
           flag = false;
         }
