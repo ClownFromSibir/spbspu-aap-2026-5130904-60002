@@ -72,6 +72,7 @@ namespace chenin
 int main()
 {
   const int MEMORY_ERROR = 1;
+  const int EMPTY_INPUT = 1;
   std::size_t size = 0;
   char *str = nullptr;
   try
@@ -82,6 +83,12 @@ int main()
   {
     std::cerr << "Error: not enough memory\n";
     return MEMORY_ERROR;
+  }
+  if (size == 0)
+  {
+    delete[] str;
+    std::cerr << "Error: empty input\n";
+    return EMPTY_INPUT;
   }
   std::cout << chenin::hasRepeatedDigits(str) << "\n";
   std::cout << chenin::hasRepeatedChars(str) << "\n";
