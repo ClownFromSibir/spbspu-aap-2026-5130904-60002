@@ -72,7 +72,7 @@ namespace chenin
 int main()
 {
   const int MEMORY_ERROR = 1;
-  const int EMPTY_INPUT = 1;
+  const int EMPTY_INPUT = 2;
   std::size_t size = 0;
   char *str = nullptr;
   try
