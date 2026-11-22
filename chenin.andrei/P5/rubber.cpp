@@ -4,26 +4,25 @@
 
 namespace chenin
 {
-    Rubber::Rubber(const point_t &innerCenter, double innerRadius,
-                   const point_t &outerCenter, double outerRadius)
-        : innerCenter_(innerCenter),
-          innerRadius_(innerRadius),
-          outerCenter_(outerCenter),
-          outerRadius_(outerRadius)
+    Rubber::Rubber(const point_t &inner_center, double inner_radius, const point_t &outer_center, double outer_radius) : inner_center_(inner_center),
+                                                                                                                         inner_radius_(inner_radius),
+                                                                                                                         outer_center_(outer_center),
+                                                                                                                         outer_radius_(outer_radius)
     {
-        if (innerRadius_ <= 0.0 || outerRadius_ <= 0.0)
+        if (inner_radius_ <= 0.0 || outer_radius_ <= 0.0)
         {
             throw std::invalid_argument("Rubber radii must be positive");
         }
-        double dx = outerCenter_.x - innerCenter_.x;
-        double dy = outerCenter_.y - innerCenter_.y;
-        double dist = std::sqrt(dx * dx + dy * dy);
+        const double dx = outer_center_.x - inner_center_.x;
+        const double dy = outer_center_.y - inner_center_.y;
+        const double dist = std::sqrt(dx * dx + dy * dy);
+        const double EPS = 1e-12;
 
-        if (dist <= 1e-12)
+        if (dist <= EPS)
         {
             throw std::invalid_argument("Rubber circles must not be concentric");
         }
-        if (dist + innerRadius_ >= outerRadius_)
+        if (dist + inner_radius_ >= outer_radius_)
         {
             throw std::invalid_argument("Inner circle must lie inside outer circle");
         }
@@ -31,26 +30,27 @@ namespace chenin
 
     double Rubber::getArea() const
     {
-        const double pi = std::acos(-1.0);
-        return pi * (outerRadius_ * outerRadius_ - innerRadius_ * innerRadius_);
+        const double PI = std::acos(-1.0);
+        return PI * (outer_radius_ * outer_radius_ - inner_radius_ * inner_radius_);
     }
 
     rectangle_t Rubber::getFrameRect() const
     {
-        return {2.0 * outerRadius_, 2.0 * outerRadius_, outerCenter_};
+        const double DIAMETER_MULT = 2.0;
+        return {DIAMETER_MULT * outer_radius_, DIAMETER_MULT * outer_radius_, outer_center_};
     }
 
     void Rubber::move(double dx, double dy)
     {
-        innerCenter_.x += dx;
-        innerCenter_.y += dy;
-        outerCenter_.x += dx;
-        outerCenter_.y += dy;
+        inner_center_.x += dx;
+        inner_center_.y += dy;
+        outer_center_.x += dx;
+        outer_center_.y += dy;
     }
 
     void Rubber::move(const point_t &pos)
     {
-        move(pos.x - innerCenter_.x, pos.y - innerCenter_.y);
+        move(pos.x - inner_center_.x, pos.y - inner_center_.y);
     }
 
     void Rubber::scale(double k)
@@ -59,9 +59,9 @@ namespace chenin
         {
             throw std::invalid_argument("Scale factor must be positive");
         }
-        innerRadius_ *= k;
-        outerRadius_ *= k;
-        outerCenter_.x = innerCenter_.x + (outerCenter_.x - innerCenter_.x) * k;
-        outerCenter_.y = innerCenter_.y + (outerCenter_.y - innerCenter_.y) * k;
+        inner_radius_ *= k;
+        outer_radius_ *= k;
+        outer_center_.x = inner_center_.x + (outer_center_.x - inner_center_.x) * k;
+        outer_center_.y = inner_center_.y + (outer_center_.y - inner_center_.y) * k;
     }
 }

@@ -21,7 +21,7 @@ namespace chenin
         point_t b_;
         point_t c_;
 
-        point_t getCenter() const; // обычный (не виртуальный!) приватный помощник
+        point_t getCenter() const;
     };
 }
 

@@ -2,12 +2,11 @@
 #include <cstddef>
 #include <iostream>
 #include <stdexcept>
-
 #include "base-types.hpp"
-#include "shape.hpp"
 #include "rectangle.hpp"
-#include "triangle.hpp"
 #include "rubber.hpp"
+#include "shape.hpp"
+#include "triangle.hpp"
 
 namespace chenin
 {
@@ -17,15 +16,14 @@ namespace chenin
         {
             throw std::invalid_argument("Scale factor must be positive");
         }
-        point_t b1 = shape.getFrameRect().pos;
+        const point_t b1 = shape.getFrameRect().pos;
         shape.move(anchor);
-        point_t b2 = shape.getFrameRect().pos;
+        const point_t b2 = shape.getFrameRect().pos;
         shape.scale(k);
         shape.move(k * (b1.x - b2.x), k * (b1.y - b2.y));
     }
 
-    void isoScaleAll(Shape *const *shapes, std::size_t count,
-                     const point_t &anchor, double k)
+    void isoScaleAll(Shape *const *shapes, std::size_t count, const point_t &anchor, double k)
     {
         if (k <= 0.0)
         {
@@ -39,47 +37,43 @@ namespace chenin
 
     rectangle_t getTotalFrameRect(const Shape *const *shapes, std::size_t count)
     {
-        rectangle_t first = shapes[0]->getFrameRect();
-        double minX = first.pos.x - first.width / 2.0;
-        double maxX = first.pos.x + first.width / 2.0;
-        double minY = first.pos.y - first.height / 2.0;
-        double maxY = first.pos.y + first.height / 2.0;
+        const double MID_DIV = 2.0;
+        const rectangle_t first = shapes[0]->getFrameRect();
+        double min_x = first.pos.x - first.width / MID_DIV;
+        double max_x = first.pos.x + first.width / MID_DIV;
+        double min_y = first.pos.y - first.height / MID_DIV;
+        double max_y = first.pos.y + first.height / MID_DIV;
 
         for (std::size_t i = 1; i < count; ++i)
         {
-            rectangle_t r = shapes[i]->getFrameRect();
-            minX = std::min(minX, r.pos.x - r.width / 2.0);
-            maxX = std::max(maxX, r.pos.x + r.width / 2.0);
-            minY = std::min(minY, r.pos.y - r.height / 2.0);
-            maxY = std::max(maxY, r.pos.y + r.height / 2.0);
+            const rectangle_t r = shapes[i]->getFrameRect();
+            min_x = std::min(min_x, r.pos.x - r.width / MID_DIV);
+            max_x = std::max(max_x, r.pos.x + r.width / MID_DIV);
+            min_y = std::min(min_y, r.pos.y - r.height / MID_DIV);
+            max_y = std::max(max_y, r.pos.y + r.height / MID_DIV);
         }
 
-        return {
-            maxX - minX,
-            maxY - minY,
-            {(minX + maxX) / 2.0, (minY + maxY) / 2.0}};
+        return {max_x - min_x, max_y - min_y, {(min_x + max_x) / MID_DIV, (min_y + max_y) / MID_DIV}};
     }
 
     void printReport(const Shape *const *shapes, std::size_t count)
     {
-        double totalArea = 0.0;
+        double total_area = 0.0;
         for (std::size_t i = 0; i < count; ++i)
         {
-            double area = shapes[i]->getArea();
-            rectangle_t frame = shapes[i]->getFrameRect();
-            totalArea += area;
+            const double area = shapes[i]->getArea();
+            const rectangle_t frame = shapes[i]->getFrameRect();
+            total_area += area;
 
-            std::cout << "Shape #" << i << ": area=" << area
-                      << ", frame=(w=" << frame.width
-                      << ", h=" << frame.height
-                      << ", pos=(" << frame.pos.x << ", " << frame.pos.y << "))\n";
+            std::cout << "Shape #" << i << ": area=" << area;
+            std::cout << ", frame=(w=" << frame.width << ", h=" << frame.height;
+            std::cout << ", pos=(" << frame.pos.x << ", " << frame.pos.y << "))\n";
         }
 
-        rectangle_t totalFrame = getTotalFrameRect(shapes, count);
-        std::cout << "Total area=" << totalArea << "\n";
-        std::cout << "Total frame=(w=" << totalFrame.width
-                  << ", h=" << totalFrame.height
-                  << ", pos=(" << totalFrame.pos.x << ", " << totalFrame.pos.y << "))\n";
+        const rectangle_t total_frame = getTotalFrameRect(shapes, count);
+        std::cout << "Total area=" << total_area << "\n";
+        std::cout << "Total frame=(w=" << total_frame.width << ", h=" << total_frame.height;
+        std::cout << ", pos=(" << total_frame.pos.x << ", " << total_frame.pos.y << "))\n";
     }
 
     void freeShapes(Shape **shapes, std::size_t count)
@@ -94,40 +88,44 @@ namespace chenin
 
 int main()
 {
-    using namespace chenin;
+    const std::size_t COUNT = 3;
+    chenin::Shape *shapes[COUNT] = {nullptr, nullptr, nullptr};
 
-    const std::size_t count = 3;
-    Shape *shapes[count] = {nullptr, nullptr, nullptr};
+    const double RECT_W = 4.0;
+    const double RECT_H = 2.0;
+    const double TRI_X2 = 3.0;
+    const double TRI_Y3 = 4.0;
+    const double RUB_R_OUT = 5.0;
 
     try
     {
-        shapes[0] = new Rectangle(4.0, 2.0, {1.0, 1.0});
-        shapes[1] = new Triangle({0.0, 0.0}, {3.0, 0.0}, {0.0, 4.0});
-        shapes[2] = new Rubber({1.0, 0.0}, 1.0, {0.0, 0.0}, 5.0);
+        shapes[0] = new chenin::Rectangle(RECT_W, RECT_H, {1.0, 1.0});
+        shapes[1] = new chenin::Triangle({0.0, 0.0}, {TRI_X2, 0.0}, {0.0, TRI_Y3});
+        shapes[2] = new chenin::Rubber({1.0, 0.0}, 1.0, {0.0, 0.0}, RUB_R_OUT);
 
         std::cout << "--- BEFORE ---\n";
-        printReport(shapes, count);
+        chenin::printReport(shapes, COUNT);
 
-        point_t anchor{0.0, 0.0};
+        chenin::point_t anchor{0.0, 0.0};
         double k = 1.0;
         if (!(std::cin >> anchor.x >> anchor.y >> k))
         {
             std::cerr << "Error: invalid input\n";
-            freeShapes(shapes, count);
+            chenin::freeShapes(shapes, COUNT);
             return 1;
         }
 
-        isoScaleAll(shapes, count, anchor, k);
+        chenin::isoScaleAll(shapes, COUNT, anchor, k);
 
         std::cout << "--- AFTER ---\n";
-        printReport(shapes, count);
+        chenin::printReport(shapes, COUNT);
 
-        freeShapes(shapes, count);
+        chenin::freeShapes(shapes, COUNT);
     }
     catch (const std::exception &e)
     {
         std::cerr << "Error: " << e.what() << "\n";
-        freeShapes(shapes, count);
+        chenin::freeShapes(shapes, COUNT);
         return 1;
     }
 
