@@ -23,7 +23,8 @@ namespace chenin
         shape.move(k * (b1.x - b2.x), k * (b1.y - b2.y));
     }
 
-    void isoScaleAll(Shape *const *shapes, std::size_t count, const point_t &anchor, double k)
+    void isoScaleAll(Shape *const *shapes, std::size_t count,
+                     const point_t &anchor, double k)
     {
         if (k <= 0.0)
         {
@@ -53,7 +54,8 @@ namespace chenin
             max_y = std::max(max_y, r.pos.y + r.height / MID_DIV);
         }
 
-        return {max_x - min_x, max_y - min_y, {(min_x + max_x) / MID_DIV, (min_y + max_y) / MID_DIV}};
+        const point_t center{(min_x + max_x) / MID_DIV, (min_y + max_y) / MID_DIV};
+        return {max_x - min_x, max_y - min_y, center};
     }
 
     void printReport(const Shape *const *shapes, std::size_t count)
@@ -72,8 +74,10 @@ namespace chenin
 
         const rectangle_t total_frame = getTotalFrameRect(shapes, count);
         std::cout << "Total area=" << total_area << "\n";
-        std::cout << "Total frame=(w=" << total_frame.width << ", h=" << total_frame.height;
-        std::cout << ", pos=(" << total_frame.pos.x << ", " << total_frame.pos.y << "))\n";
+        std::cout << "Total frame=(w=" << total_frame.width;
+        std::cout << ", h=" << total_frame.height;
+        std::cout << ", pos=(" << total_frame.pos.x;
+        std::cout << ", " << total_frame.pos.y << "))\n";
     }
 
     void freeShapes(Shape **shapes, std::size_t count)

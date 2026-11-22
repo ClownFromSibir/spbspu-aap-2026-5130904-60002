@@ -8,7 +8,8 @@ namespace chenin
     class Rubber : public Shape
     {
     public:
-        Rubber(const point_t &inner_center, double inner_radius, const point_t &outer_center, double outer_radius);
+        Rubber(const point_t &inner_center, double inner_radius,
+               const point_t &outer_center, double outer_radius);
 
         double getArea() const override;
         rectangle_t getFrameRect() const override;

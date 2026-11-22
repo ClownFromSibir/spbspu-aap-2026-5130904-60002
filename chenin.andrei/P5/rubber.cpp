@@ -4,10 +4,11 @@
 
 namespace chenin
 {
-    Rubber::Rubber(const point_t &inner_center, double inner_radius, const point_t &outer_center, double outer_radius) : inner_center_(inner_center),
-                                                                                                                         inner_radius_(inner_radius),
-                                                                                                                         outer_center_(outer_center),
-                                                                                                                         outer_radius_(outer_radius)
+    Rubber::Rubber(const point_t &inner_center, double inner_radius,
+                   const point_t &outer_center, double outer_radius) : inner_center_(inner_center),
+                                                                       inner_radius_(inner_radius),
+                                                                       outer_center_(outer_center),
+                                                                       outer_radius_(outer_radius)
     {
         if (inner_radius_ <= 0.0 || outer_radius_ <= 0.0)
         {
@@ -31,13 +32,15 @@ namespace chenin
     double Rubber::getArea() const
     {
         const double PI = std::acos(-1.0);
-        return PI * (outer_radius_ * outer_radius_ - inner_radius_ * inner_radius_);
+        const double diff = outer_radius_ * outer_radius_ - inner_radius_ * inner_radius_;
+        return PI * diff;
     }
 
     rectangle_t Rubber::getFrameRect() const
     {
         const double DIAMETER_MULT = 2.0;
-        return {DIAMETER_MULT * outer_radius_, DIAMETER_MULT * outer_radius_, outer_center_};
+        const double side = DIAMETER_MULT * outer_radius_;
+        return {side, side, outer_center_};
     }
 
     void Rubber::move(double dx, double dy)

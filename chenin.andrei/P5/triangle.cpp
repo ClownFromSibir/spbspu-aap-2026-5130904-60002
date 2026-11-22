@@ -19,13 +19,16 @@ namespace chenin
     point_t Triangle::getCenter() const
     {
         const double CENTROID_DIV = 3.0;
-        return {(a_.x + b_.x + c_.x) / CENTROID_DIV, (a_.y + b_.y + c_.y) / CENTROID_DIV};
+        const double cx = (a_.x + b_.x + c_.x) / CENTROID_DIV;
+        const double cy = (a_.y + b_.y + c_.y) / CENTROID_DIV;
+        return {cx, cy};
     }
 
     double Triangle::getArea() const
     {
         const double HALF = 0.5;
-        return HALF * std::abs((b_.x - a_.x) * (c_.y - a_.y) - (c_.x - a_.x) * (b_.y - a_.y));
+        const double det = (b_.x - a_.x) * (c_.y - a_.y) - (c_.x - a_.x) * (b_.y - a_.y);
+        return HALF * std::abs(det);
     }
 
     rectangle_t Triangle::getFrameRect() const
@@ -35,8 +38,8 @@ namespace chenin
         const double min_y = std::min(a_.y, std::min(b_.y, c_.y));
         const double max_y = std::max(a_.y, std::max(b_.y, c_.y));
         const double MID_DIV = 2.0;
-
-        return {max_x - min_x, max_y - min_y, {(min_x + max_x) / MID_DIV, (min_y + max_y) / MID_DIV}};
+        const point_t center{(min_x + max_x) / MID_DIV, (min_y + max_y) / MID_DIV};
+        return {max_x - min_x, max_y - min_y, center};
     }
 
     void Triangle::move(double dx, double dy)
