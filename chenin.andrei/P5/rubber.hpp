@@ -5,24 +5,24 @@
 
 namespace chenin
 {
-    class Rubber : public Shape
-    {
-    public:
-        Rubber(const point_t &inner_center, double inner_radius,
-               const point_t &outer_center, double outer_radius);
+  class Rubber:
+      public Shape
+  {
+  public:
+    Rubber(const point_t &in_pos, double in_r, const point_t &out_pos, double out_r);
 
-        double getArea() const override;
-        rectangle_t getFrameRect() const override;
-        void move(const point_t &pos) override;
-        void move(double dx, double dy) override;
-        void scale(double k) override;
+    double getArea() const override;
+    rectangle_t getFrameRect() const override;
+    void move(const point_t &pos) override;
+    void move(double dx, double dy) override;
+    void scale(double k) override;
 
-    private:
-        point_t inner_center_;
-        double inner_radius_;
-        point_t outer_center_;
-        double outer_radius_;
-    };
+  private:
+    point_t inner_center_;
+    double inner_radius_;
+    point_t outer_center_;
+    double outer_radius_;
+  };
 }
 
 #endif
