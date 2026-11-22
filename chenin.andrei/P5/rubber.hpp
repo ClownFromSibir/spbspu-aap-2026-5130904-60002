@@ -5,8 +5,7 @@
 
 namespace chenin
 {
-  class Rubber:
-      public Shape
+  class Rubber: public Shape
   {
   public:
     Rubber(const point_t &in_pos, double in_r, const point_t &out_pos, double out_r);
